@@ -81,3 +81,6 @@ and got
 so of course i:
 	sudo usermod -a -G audio k-jax
 logged out and logged back in
+Installed JACK plugin for vlc using:
+	sudo apt-get install vlc-plugin-jack
+After some sound advice, I decided to install qjackctl using: sudo apt-get install qjackctl

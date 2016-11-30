@@ -78,9 +78,11 @@ and got
 	encounter xruns. Please apply all the above mentioned changes and start jack again!
 	jack_client_open() failed, status = 0x11
 	Unable to connect to JACK server
-so of course i:
+so of course i
 	sudo usermod -a -G audio k-jax
 logged out and logged back in
-Installed JACK plugin for vlc using:
+Installed JACK plugin for vlc using
 	sudo apt-get install vlc-plugin-jack
-After some sound advice, I decided to install qjackctl using: sudo apt-get install qjackctl
+After some sound advice, I decided to install qjackctl using
+	sudo apt-get install qjackctl
+And I will soon be implementing jack record . . .

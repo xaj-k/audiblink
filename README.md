@@ -86,3 +86,5 @@ Installed JACK plugin for vlc using
 After some sound advice, I decided to install qjackctl using
 	sudo apt-get install qjackctl
 And I will soon be implementing jack record . . .
+added capture_client.c to hopefully record the data properly because just dumping to file in the callback doesn't seem to be working all that well.
+I was advised to use the ring buffer as well to keep things as close to real time as possible.

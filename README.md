@@ -88,3 +88,32 @@ After some sound advice, I decided to install qjackctl using
 And I will soon be implementing jack record . . .
 added capture_client.c to hopefully record the data properly because just dumping to file in the callback doesn't seem to be working all that well.
 I was advised to use the ring buffer as well to keep things as close to real time as possible.
+
+I just tried to compile capture_client.c via:
+	gcc -o test capture_client.c `pkg-config --cflags --libs jack`
+and got:
+	capture_client.c:30:21: fatal error: sndfile.h: No such file or directory
+	 #include <sndfile.h>
+        	             ^
+	compilation terminated.
+after googling I found I need to install the "libsndfile1-dev" package so I:
+	sudo apt-get install libsndfile1-dev
+tried compiling again with:
+	gcc -o test capture_client.c `pkg-config --cflags --libs jack`
+and got:
+	capture_client.c: In function ‘main’:
+	capture_client.c:316:9: warning: ‘jack_client_new’ is deprecated (declared at /usr/include/jack/jack.h:97) [-Wdeprecated-declarations]
+	         if ((client = jack_client_new ("jackrec")) == 0) {
+	         ^
+	/tmp/ccXC7V11.o: In function `disk_thread':
+	capture_client.c:(.text+0xd6): undefined reference to `sf_writef_float'
+	capture_client.c:(.text+0xf5): undefined reference to `sf_error_str'
+	/tmp/ccXC7V11.o: In function `setup_disk_thread':
+	capture_client.c:(.text+0x41b): undefined reference to `sf_open'
+	capture_client.c:(.text+0x44f): undefined reference to `sf_error_str'
+	/tmp/ccXC7V11.o: In function `run_disk_thread':
+	capture_client.c:(.text+0x536): undefined reference to `sf_close'
+	collect2: error: ld returned 1 exit status
+a bit more internet searching and I found that:
+	gcc -o test capture_client.c `pkg-config --cflags --libs jack sndfile`
+did the trick, now I just need to fix the warning
